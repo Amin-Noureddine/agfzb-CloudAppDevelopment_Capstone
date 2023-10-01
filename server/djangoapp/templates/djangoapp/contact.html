@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Contact Us</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+        <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    </head>
+
+    <body>
+        <section class="mb-4">
+            <h1 class="h1-responsive font-weight-bold text-center my-4">Contact Us</h1>
+            <p class="text-center w-responsive mx-auto mb-5">Do you have any questions? Please contact us!</p>
+            <div class="row">
+                <div class="col-md-9 mb-md-0 mb-5">
+                    <form id="contact-form" name="contact-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <label for="first_name" style="margin-left: 50px">First name</label>
+                                    <input type="text" id="first_name" name="firstname" class="form-control" placeholder="Enter your first name" style="margin-left: 50px">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <label for="last_name" style="margin-left: 50px">Last name</label>
+                                    <input type="text" id="last_name" name="lastname" class="form-control" placeholder="Enter your last name" style="margin-left: 50px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px">
+                            <div class="col-md-12">
+                                <div class="md-form mb-0">
+                                    <label for="email" style="margin-left: 50px">Email</label>
+                                    <input type="text" id="email" name="email" class="form-control" placeholder="Enter your email" style="margin-left: 50px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px">
+                            <div class="col-md-12">
+                                <div class="md-form mb-0">
+                                    <label for="subject" style="margin-left: 50px">Subject</label>
+                                    <input type="text" id="subject" name="subject" class="form-control" placeholder="Enter Subject" style="margin-left: 50px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px">
+                            <div class="col-md-12">
+                                <div class="md-form mb-0">
+                                    <label for="message" style="margin-left: 50px">Message</label>
+                                    <textarea type="text" id="message" name="message" class="form-control md-textarea" placeholder="Leave us your message" style="margin-left: 50px" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="text-center text-md-left" style="margin-top: 20px">
+                        <a class="btn btn-primary" style="margin-left: 50px">Send</a>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <ul class="list-unstyled mb-0">
+                        <li><i class="fa fa-map-marker" style="font-size: 50px; margin-top: 20px"></i>
+                            <p>Edmonton, AB, Canada</p>
+                        </li>
+        
+                        <li><i class="fa fa-phone" style="font-size: 50px; margin-top: 20px"></i>
+                            <p>+1(825) 123-4567</p>
+                        </li>
+        
+                        <li><i class="fa fa-envelope" style="font-size: 50px; margin-top: 20px"></i>
+                            <p>contact@cardealer.com</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
