@@ -26,6 +26,8 @@ urlpatterns = [
 
     # Add a Review page view
     path('add_review/', views.add_review, name='add_review'),
+        # path for dealer reviews view
+    path('dealer/<int:id>/', views.get_dealer_details, name='dealer_details')
 ]
 
 # Serve media files during development

@@ -1,69 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        {% load static %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <meta charset="UTF-8">
-        <title>Online Courses</title>
-    </head>
-<!-- Add a Navigation bar -->
-<!-- Add a Navigation bar -->
-<nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Online Course</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            {% if user.is_authenticated %}
-            <li>
-                <a class="btn btn-link" href="#">{{ user.first_name }} ({{ user.username }})</a>
-                <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a> <!-- Update the Logout link -->
-            </li>
-            {% else %}
-            <li>
-                <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
-                    {% csrf_token %}
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Username" name="username">
-                        <input type="password" class="form-control" placeholder="Password" name="psw">
-                        <button class="btn btn-primary" type="submit">Login</button>
-                        <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
-                    </div>
-                </form>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-</nav>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Dealership Review</title>
+</head>
+<body>
+    <!-- Add a Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Car Dealer</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-
-
-
-
-<!-- Course list section -->
-{% if course_list %}
-    <div class=""> <!--Stylize root div with .container class -->
-        <div class=""> <!--Stylize the second div with .card-deck class -->
-            {% for course in course_list %}
-            <div class="" style="width: 36rem;"> <!--Stylize third div with .card class -->
-                <img class="" src="{{MEDIA_URL}}/{{ course.image }}" width="240px" height="240px"
-                           alt="Course image"> <!--Stylize card image with .card-img-left class -->
-                <div class=""> <!--Stylize root div with .card-body and .bg-light class -->
-                    <h5 class="">{{ course.name }}, <span class=""> <!--Stylize h5 with .card-title and span with .text-success class -->
-                              {{ course.total_enrollment}} enrolled</span></h5>
-                    <p class="">{{ course.description}}</p> <!--Stylize card description with .card-text class -->
-                    <form action="{% url 'djangoapp:enroll' course.id %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit"
-                               value="Enroll"> <!--Stylize Enroll button with .btn and .btn-primary class -->
-                    </form>
-                </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/djangoapp">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/djangoapp/about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/djangoapp/contact">Contact Us</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a class="btn btn-link" href="#">{{ user.first_name }} ({{ user.username }})</a>
+                        <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <form class="form-inline" action="{% url 'djangoapp:login' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="username" name="username">
+                                <input type="password" class="form-control" placeholder="password" name="psw">
+                                <button class="btn btn-primary" type="submit">Login</button>
+                                <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                            </div>
+                        </form>
+                    </li>
+                    {% endif %}
+                </ul>
             </div>
-            {% endfor %}
         </div>
+    </nav>
+
+    <!-- Add a dealer table here -->
+    <div class="container-fluid">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        <main class="container"></main>
+        <table class="table" id="table" data-filter-control="true">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Dealer Name</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Zip</th>
+                    <th data-field="state" data-filter-control="select">State</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dealer in dealership_list %}
+                    <tr>
+                        <td>{{ dealer.id }}</td>
+                        <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{ dealer.full_name }}</a></td>
+                        <td>{{ dealer.city }}</td>
+                        <td>{{ dealer.address }}</td>
+                        <td>{{ dealer.zip }}</td>
+                        <td>{{ dealer.st }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
     </div>
-{% else %}
-    <p>No courses are available.</p>
-{% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(function() {
+            $('#table').bootstrapTable()
+        })
+    </script>
 </body>
 </html>
