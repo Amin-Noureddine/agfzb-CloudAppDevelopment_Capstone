@@ -3,6 +3,9 @@
 <head>
     {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <meta charset="UTF-8">
     <title>Dealership Review</title>
 </head>
@@ -58,15 +61,14 @@
                 <div class="alert alert-warning" role="alert">{{ message }}</div>
             {% endfor %}
         {% endif %}
-        <main class="container"></main>
         <table class="table" id="table" data-filter-control="true">
             <thead>
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Dealer Name</th>
-                    <th scope="col">City</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Zip</th>
+                    <th data-field="id">ID</th>
+                    <th data-field="full_name">Dealer Name</th>
+                    <th data-field="city">City</th>
+                    <th data-field="address">Address</th>
+                    <th data-field="zip">Zip</th>
                     <th data-field="state" data-filter-control="select">State</th>
                 </tr>
             </thead>
@@ -78,21 +80,17 @@
                         <td>{{ dealer.city }}</td>
                         <td>{{ dealer.address }}</td>
                         <td>{{ dealer.zip }}</td>
-                        <td>{{ dealer.st }}</td>
+                        <td>{{ dealer.state }}</td> <!-- Corrected field name from "st" to "state" -->
                     </tr>
                 {% endfor %}
             </tbody>
-            
         </table>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(function() {
-            $('#table').bootstrapTable()
-        })
+            $('#table').bootstrapTable();
+        });
     </script>
 </body>
 </html>
