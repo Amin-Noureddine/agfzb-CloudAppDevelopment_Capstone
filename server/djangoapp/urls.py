@@ -1,3 +1,4 @@
+# urls.py
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
@@ -6,8 +7,7 @@ from . import views
 app_name = 'djangoapp'
 urlpatterns = [
     # Default homepage view
-       path('', views.get_dealerships, name='index'),  # Define an 'index' URL pattern
-
+    path('', views.get_dealerships, name='index'),  # Define an 'index' URL pattern
 
     # About page view
     path('about/', views.about, name='about'),
@@ -26,8 +26,13 @@ urlpatterns = [
 
     # Add a Review page view
     path('add_review/', views.add_review, name='add_review'),
-        # path for dealer reviews view
-    path('dealer/<int:id>/', views.get_dealer_details, name='dealer_details')
+
+    # Path for dealer reviews view
+    path('dealer/<int:id>/', views.get_dealer_details, name='dealer_details'),
+
+    # Path for adding a review to a specific dealer
+    path('djangoapp/add_review/<int:dealer_id>/', views.add_review, name='add_review'),
+
 ]
 
 # Serve media files during development

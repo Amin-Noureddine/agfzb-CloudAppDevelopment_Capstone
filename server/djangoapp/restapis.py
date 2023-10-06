@@ -1,6 +1,6 @@
 import requests
 import json
-# from .models import CarDealer, DealerReview
+from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_watson import NaturalLanguageUnderstandingV1
@@ -57,12 +57,12 @@ def get_dealers_from_cf(url, **kwargs):
         dealers = json_result
         # For each dealer object
         for dealer in dealers:
-            if isinstance(dealer, dict) and "doc" in dealer:
+           
                 # Check if the dealer is a dictionary with a "doc" key
-                dealer_doc = dealer["doc"]
-                print(dealer_doc)
+            dealer_doc = dealer
+            print(dealer_doc)
                 # Create a CarDealer object with values in `doc` object
-                dealer_obj = CarDealer(
+            dealer_obj = CarDealer(
                     address=dealer_doc.get("address", ""),
                     city=dealer_doc.get("city", ""),
                     full_name=dealer_doc.get("full_name", ""),
@@ -73,7 +73,7 @@ def get_dealers_from_cf(url, **kwargs):
                     st=dealer_doc.get("st", ""),
                     zip=dealer_doc.get("zip", "")
                 )
-                results.append(dealer_obj)
+            results.append(dealer_obj)
 
     return results
 
@@ -141,4 +141,3 @@ def analyze_review_sentiments(text):
     
     
     return(label)
-
