@@ -31,7 +31,7 @@ urlpatterns = [
     path('dealer/<int:id>/', views.get_dealer_details, name='dealer_details'),
 
     # Path for adding a review to a specific dealer
-    path('djangoapp/add_review/<int:dealer_id>/', views.add_review, name='add_review'),
+    path('add_review/<int:id>/', views.add_review, name='add_review')
 
 ]
 

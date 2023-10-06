@@ -2,8 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
-# from .models import related models
-# from .restapis import related methods
+from .models import CarMake, CarModel, CarDealer
 from .restapis import get_dealers_from_cf, get_dealer_by_id_from_cf, get_dealer_reviews_from_cf, post_request
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -104,18 +103,29 @@ def get_dealerships(request):
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 def get_dealer_details(request, id):
-    if request.method == "GET":
-        context = {}
-        dealer_url = "http://localhost:3000/dealerships/get"
-        dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
-        context["dealer"] = dealer
+    context = {}
     
-        review_url = "http://localhost:5000/api/get_reviews?id=15"
-        reviews = get_dealer_reviews_from_cf(review_url, id=id)
-        print(reviews)
+    # Define the dealer_url variable
+    dealer_url = "http://localhost:3000/dealerships/get"
+
+    # Get dealer details using the specified ID
+    dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
+    if dealer:
+        context["dealer"] = dealer
+    else:
+        # Handle the case where the dealer with the given ID doesn't exist
+        return render(request, 'djangoapp/error_page.html', {"message": "Dealer not found"})
+
+    # Get dealer reviews using the specified ID
+    review_url = "http://localhost:5000/api/get_reviews?id=" + str(id)  # Assuming ID is part of the URL
+    reviews = get_dealer_reviews_from_cf(review_url, id=id)
+    if reviews:
         context["reviews"] = reviews
-        
-        return render(request, 'djangoapp/dealer_details.html', context)
+    else:
+        # Handle the case where no reviews are found
+        context["reviews"] = []
+
+    return render(request, 'djangoapp/dealer_details.html', context)
 
 # Create a `add_review` view to submit a review
 def add_review(request, id):
@@ -155,4 +165,5 @@ def add_review(request, id):
             new_payload["review"] = payload
             review_post_url =  "https://us-south.functions.appdomain.cloud/api/v1/web/ba11e6d4-8cd5-43d9-9296-9664f20e0c05/dealership-package/post-review"
             post_request(review_post_url, new_payload, id=id)
-        return redirect("djangoapp:dealer_details", id=id)
+        path('add_review/<int:dealer_id>/', views.add_review, name='add_review')
+
