@@ -14,7 +14,8 @@
             {% endfor %}
         {% endif %}
         <h3>Reviews for <b>{{ dealer.full_name }}</b></h3>
-        <a class="btn btn-link" href="{% url 'djangoapp:add_review' dealer.id %}">Add Review</a>
+        <a class="btn btn-link" href="{% if dealer.id %}{% url 'djangoapp:add_review' dealer.id %}{% endif %}">Add Review</a>
+
         <div class="container">
             <div class="card-columns">
                 {% for review in reviews %}

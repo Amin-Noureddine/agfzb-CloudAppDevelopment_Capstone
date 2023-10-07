@@ -103,29 +103,18 @@ def get_dealerships(request):
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 def get_dealer_details(request, id):
-    context = {}
-    
-    # Define the dealer_url variable
-    dealer_url = "http://localhost:3000/dealerships/get"
-
-    # Get dealer details using the specified ID
-    dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
-    if dealer:
-        context["dealer"] = dealer
-    else:
-        # Handle the case where the dealer with the given ID doesn't exist
-        return render(request, 'djangoapp/error_page.html', {"message": "Dealer not found"})
-
-    # Get dealer reviews using the specified ID
-    review_url = "http://localhost:5000/api/get_reviews?id=" + str(id)  # Assuming ID is part of the URL
-    reviews = get_dealer_reviews_from_cf(review_url, id=id)
-    if reviews:
+    if request.method == "GET":
+        context = {}
+        dealer_url = "http://localhost:3000/dealerships/get"
+        dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
+        context["dealer"] = dealer         
+        
+        review_url = "http://localhost:5000/api/get_reviews"
+        reviews = get_dealer_reviews_from_cf(review_url, id=id)
+        print(reviews)
         context["reviews"] = reviews
-    else:
-        # Handle the case where no reviews are found
-        context["reviews"] = []
-
-    return render(request, 'djangoapp/dealer_details.html', context)
+        
+        return render(request, 'djangoapp/dealer_details.html', context)
 
 # Create a `add_review` view to submit a review
 def add_review(request, id):
