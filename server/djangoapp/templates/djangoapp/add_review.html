@@ -10,55 +10,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
 </head>
-<body>
-<div class="container-fluid">
-    <h3>Add a review about <b>{{dealer.full_name}}</b></h3>
-    <form action="{% url 'djangoapp:add_review' dealer.id%}" method="post">
-        <div class="form-group">
-
-              <div class="mb-3">
-                  <label for="content"><b>Enter the review content: </b></label>
-                  <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
-              </div>
-
-              <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
-                  <label class="form-check-label" for="purchasecheck">
-                      Has purchased the car from {{dealer.full_name}} ?
-                  </label>
-                  <label class="text-muted">(select purchased car information below if checked)</label>
-              </div>
-              <div class="mb-3">
-                <label for="car"><b>Select your car (model-make-year):</b></label>
-                <select name="car" id="car" class="form-select" required>
-                    {% for car in cars %}
-                    <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
+    <body>
+      {% include 'Navbar.html' %}
+    <!--Add review form here -->
+    <form action="{% url 'djangoapp:add_review' dealer_id %}" method="post">
+        <div class="container">
+            {% csrf_token %}
+            <h1>Write a review for {{dealer.full_name}}</h1>
+            <hr>
             <div class="mb-3">
-                <label for="purchasedate"><b>Select Your Purchase Date: </b></label>
-                <input class="date-own form-control" style="width: 300px;" type="text" name="purchasedate" id="purchasedate">
+                <label for="review"><b>Enter the review content:</b></label>
+                <textarea class="form-control" id="review" name="review" rows="2" required></textarea>
+                <div class="form-check">
+                <br><input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+                <label class="form-check-label" for="purchasecheck"><b>Has purchased the car from {{dealer.full_name}} ? </b><br></label>
+                <br>
+                <br> 
+                </div>
+                <div class="mb-3">
+                    <label for="car"><b>Select your Car (model-make-year-type):</b></label>
+                    <select name="car" id="car" class="form-select" required>
+                        {% for car in cars %}
+                        <option selected value="{{ car.id }}">{{ car.car_make.name }} {{ car.name }} {{ car.year }} {{ car.type }}</option>
+                        {% endfor %}
+                    </select>
+                </div>              
+
+                </div>
+                <label for="purchase_date"><b>Select Your Purchase Date:</b></label><br>
+                <input type="date" class="form-control" name="purchasedate" >
+                <hr/>  <br>                 
+                <button class="btn btn-primary" type="submit" formmethod="post">Submit</button>
             </div>
-
-      </div>
-      {% csrf_token %}
-      <div>
-          <button class="btn btn-primary" type="submit">Submit</button>
-      </div>
-      {% if messages %}
-          {% for message in messages %}
-              <div class="alert alert-warning" role="alert">{{ message }}</div>
-          {% endfor %}
-      {% endif %}
-  </form>
-</div>
-</body>
-<script type="text/javascript">
-    $('.date-own').datepicker({
-       format: 'mm/dd/yyyy'
-     });
-</script>
-
+        </div>
+    </form>
+    </body>
+    <script type="text/javascript">
+        $('.date-own').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+    </script>
 </html>
